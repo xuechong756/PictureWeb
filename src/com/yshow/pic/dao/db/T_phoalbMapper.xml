@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yshow.pic.dao.db.T_phoalbMapper" >
+  <resultMap id="BaseResultMap" type="com.yshow.pic.model.db.pic.T_phoalb" >
+    <id column="pal_id" property="palId" jdbcType="INTEGER" />
+    <result column="pal_pcoid" property="palPcoid" jdbcType="INTEGER" />
+    <result column="pal_name" property="palName" jdbcType="VARCHAR" />
+    <result column="pal_bigurl" property="palBigurl" jdbcType="VARCHAR" />
+    <result column="pal_midurl" property="palMidurl" jdbcType="VARCHAR" />
+    <result column="pal_smlurl" property="palSmlurl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pal_id, pal_pcoid, pal_name, pal_bigurl, pal_midurl, pal_smlurl
+  </sql>
+  <select id="selectByPcoid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+      SELECT  pal_bigurl, pal_midurl, pal_smlurl
+      FROM t_phoalb WHERE pal_pcoid = #{pcoid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_phoalb
+    where pal_id = #{palId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_phoalb
+    where pal_id = #{palId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yshow.pic.model.db.pic.T_phoalb" >
+    insert into t_phoalb (pal_id, pal_pcoid, pal_name, 
+      pal_bigurl, pal_midurl, pal_smlurl
+      )
+    values (#{palId,jdbcType=INTEGER}, #{palPcoid,jdbcType=INTEGER}, #{palName,jdbcType=VARCHAR}, 
+      #{palBigurl,jdbcType=VARCHAR}, #{palMidurl,jdbcType=VARCHAR}, #{palSmlurl,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yshow.pic.model.db.pic.T_phoalb" >
+    insert into t_phoalb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="palId != null" >
+        pal_id,
+      </if>
+      <if test="palPcoid != null" >
+        pal_pcoid,
+      </if>
+      <if test="palName != null" >
+        pal_name,
+      </if>
+      <if test="palBigurl != null" >
+        pal_bigurl,
+      </if>
+      <if test="palMidurl != null" >
+        pal_midurl,
+      </if>
+      <if test="palSmlurl != null" >
+        pal_smlurl,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="palId != null" >
+        #{palId,jdbcType=INTEGER},
+      </if>
+      <if test="palPcoid != null" >
+        #{palPcoid,jdbcType=INTEGER},
+      </if>
+      <if test="palName != null" >
+        #{palName,jdbcType=VARCHAR},
+      </if>
+      <if test="palBigurl != null" >
+        #{palBigurl,jdbcType=VARCHAR},
+      </if>
+      <if test="palMidurl != null" >
+        #{palMidurl,jdbcType=VARCHAR},
+      </if>
+      <if test="palSmlurl != null" >
+        #{palSmlurl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yshow.pic.model.db.pic.T_phoalb" >
+    update t_phoalb
+    <set >
+      <if test="palPcoid != null" >
+        pal_pcoid = #{palPcoid,jdbcType=INTEGER},
+      </if>
+      <if test="palName != null" >
+        pal_name = #{palName,jdbcType=VARCHAR},
+      </if>
+      <if test="palBigurl != null" >
+        pal_bigurl = #{palBigurl,jdbcType=VARCHAR},
+      </if>
+      <if test="palMidurl != null" >
+        pal_midurl = #{palMidurl,jdbcType=VARCHAR},
+      </if>
+      <if test="palSmlurl != null" >
+        pal_smlurl = #{palSmlurl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pal_id = #{palId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yshow.pic.model.db.pic.T_phoalb" >
+    update t_phoalb
+    set pal_pcoid = #{palPcoid,jdbcType=INTEGER},
+      pal_name = #{palName,jdbcType=VARCHAR},
+      pal_bigurl = #{palBigurl,jdbcType=VARCHAR},
+      pal_midurl = #{palMidurl,jdbcType=VARCHAR},
+      pal_smlurl = #{palSmlurl,jdbcType=VARCHAR}
+    where pal_id = #{palId,jdbcType=INTEGER}
+  </update>
+</mapper>

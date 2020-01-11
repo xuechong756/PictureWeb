@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yshow.pic.dao.db.T_phtypeMapper">
+	<resultMap id="BaseResultMap" type="com.yshow.pic.model.db.pic.T_phtype">
+		<id column="hptp_id" property="hptpId" jdbcType="INTEGER" />
+		<result column="hptp_name" property="hptpName" jdbcType="VARCHAR" />
+		<result column="hptp_sort" property="hptpSort" jdbcType="VARCHAR" />
+		<result column="hptp_del" property="hptpDel" jdbcType="INTEGER" />
+		<collection property="tplasList"
+			resultMap="com.yshow.pic.dao.db.T_phoatlasMapper.BaseResultMap" ofType="com.yshow.pic.model.db.pic.T_phoatlas"
+			column="pco_hptpid" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		hptp_id, hptp_name, hptp_sort
+	</sql>
+	<!-- 获取全部类型(不包括标记删除) start-->
+	<select id="selectallid" resultMap="BaseResultMap">
+	    SELECT hptp_id, hptp_name FROM t_phtype
+	    WHERE hptp_del = 1 ORDER BY hptp_sort, hptp_id
+	</select>
+	<!-- 获取全部类型(不包括标记删除) end-->
+	<select id="selectall" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM t_phtype AND hptp_del = 1
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_phtype
+		where hptp_id = #{hptpId,jdbcType=INTEGER} AND hptp_del = 1
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		t_phtype
+		where hptp_id = #{hptpId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.yshow.pic.model.db.pic.T_phtype">
+		insert into t_phtype (hptp_id,
+		hptp_name)
+		values (#{hptpId,jdbcType=INTEGER},
+		#{hptpName,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.yshow.pic.model.db.pic.T_phtype" useGeneratedKeys="true" keyProperty="fsId">
+		insert into t_phtype
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="hptpId != null">
+				hptp_id,
+			</if>
+			<if test="hptpName != null">
+				hptp_name,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="hptpId != null">
+				#{hptpId,jdbcType=INTEGER},
+			</if>
+			<if test="hptpName != null">
+				#{hptpName,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.yshow.pic.model.db.pic.T_phtype">
+		update t_phtype
+		<set>
+			<if test="hptpName != null">
+				hptp_name = #{hptpName,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where hptp_id = #{hptpId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.yshow.pic.model.db.pic.T_phtype">
+		update t_phtype
+		set hptp_name = #{hptpName,jdbcType=VARCHAR}
+		where hptp_id =
+		#{hptpId,jdbcType=INTEGER}
+	</update>
+</mapper>

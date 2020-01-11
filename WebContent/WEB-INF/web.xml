@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>PictureWeb</display-name>
+  <!-- 设置servlet编码开始 -->  
+    <filter>
+      <filter-name>CharacterEncodingFilter</filter-name>  
+     <filter-class>
+          org.springframework.web.filter.CharacterEncodingFilter
+      </filter-class>  
+      <init-param>  
+          <param-name>encoding</param-name>  
+      <param-value>UTF-8</param-value>  
+      </init-param>  
+ 	</filter>
+   
+ <filter-mapping>  
+         <filter-name>CharacterEncodingFilter</filter-name>  
+         <url-pattern>/*</url-pattern>  
+ </filter-mapping>
+    <!-- 设置servlet编码结束 --> 
+
+	<!-- 配置 DispatcherServlet -->
+	<servlet>
+		<servlet-name>dispatcherServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!-- 配置 DispatcherServlet 的一个初始化参数: 配置 SpringMVC 配置文件的位置和名称 -->
+		<!-- 
+			实际上也可以不通过 contextConfigLocation 来配置 SpringMVC 的配置文件, 而使用默认的.
+			默认的配置文件为: /WEB-INF/<servlet-name>-servlet.xml
+		-->
+	 
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/springmvc.xml</param-value>
+		</init-param>
+		
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>dispatcherServlet</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	<!-- 设置由Sprng载入的Log4j配置文件位置 -->
+	<context-param>
+	<param-name>log4jConfigLocation</param-name>
+	<param-value>WEB-INF/log4j.properties</param-value>
+	</context-param>
+	<!-- Spring刷新Log4j配置文件变动的间隔,单位为毫秒 -->
+	<context-param>
+	<param-name>log4jRefreshInterval</param-name>
+	<param-value>10000</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+	<!-- 在同一个tomcat部署,param-value每个应用必须互不相同 start -->
+	<context-param>
+    	<param-name>webAppRootKey</param-name>
+   	 	<param-value>PictureWeb.root</param-value>
+	</context-param>
+	<!-- 在同一个tomcat部署，下面的param-value每个应用必须互不相同 end -->
+</web-app>

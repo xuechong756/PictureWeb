@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yshow.pic.dao.db.T_phoatlasMapper" >
+  <resultMap id="BaseResultMap" type="com.yshow.pic.model.db.pic.T_phoatlas" >
+    <id column="pco_id" property="pcoId" jdbcType="INTEGER" />
+    <result column="pco_hptpid" property="pcoHptpid" jdbcType="INTEGER" />
+    <result column="pco_deg" property="pcoDeg" jdbcType="TINYINT" />
+    <result column="pco_date" property="pcoDate" jdbcType="TIMESTAMP" />
+    <result column="pco_title" property="pcoTitle" jdbcType="VARCHAR" />
+    <collection property="t_phoalbList"
+			resultMap="com.yshow.pic.dao.db.T_phoalbMapper.BaseResultMap"
+			ofType="com.yshow.pic.model.db.pic.T_phoalb"
+			column="pal_pcoid" />
+  </resultMap>
+  <resultMap id="ResultOfInteger" type="java.lang.Integer">
+		<result column="count(pal_id)" property="budget" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pco_id, pco_hptpid, pco_deg, pco_date, pco_title
+  </sql>
+  <select id="selphcount" resultMap="ResultOfInteger" parameterType="java.lang.Integer">
+	SELECT count(pal_id) FROM t_phoalb WHERE pal_pcoid = #{id};      
+  </select>
+  <select id="selectlbsBytype" resultMap="BaseResultMap"
+		parameterType="com.yshow.pic.model.local.ParamType">
+		CALL selphoatlas(#{type}, #{page}, #{items});
+	</select>
+  <select id="selectCollectByKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+      SELECT  ps.*, pb.* 
+      FROM t_phoatlas ps, t_phoalb pb WHERE ps.pco_id = pb.pal_pcoid
+      AND ps.pco_id = #{pcoId}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_phoatlas
+    where pco_id = #{pcoId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_phoatlas
+    where pco_id = #{pcoId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yshow.pic.model.db.pic.T_phoatlas" useGeneratedKeys="true" keyProperty="fsId" >
+    insert into t_phoatlas (pco_id, pco_hptpid, pco_deg, 
+      pco_date, pco_title)
+    values (#{pcoId,jdbcType=INTEGER}, #{pcoHptpid,jdbcType=INTEGER}, #{pcoDeg,jdbcType=TINYINT}, 
+      #{pcoDate,jdbcType=TIMESTAMP}, #{pcoTitle,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yshow.pic.model.db.pic.T_phoatlas" useGeneratedKeys="true" keyProperty="fsId" >
+    insert into t_phoatlas
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pcoId != null" >
+        pco_id,
+      </if>
+      <if test="pcoHptpid != null" >
+        pco_hptpid,
+      </if>
+      <if test="pcoDeg != null" >
+        pco_deg,
+      </if>
+      <if test="pcoDate != null" >
+        pco_date,
+      </if>
+      <if test="pcoTitle != null" >
+        pco_title,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pcoId != null" >
+        #{pcoId,jdbcType=INTEGER},
+      </if>
+      <if test="pcoHptpid != null" >
+        #{pcoHptpid,jdbcType=INTEGER},
+      </if>
+      <if test="pcoDeg != null" >
+        #{pcoDeg,jdbcType=TINYINT},
+      </if>
+      <if test="pcoDate != null" >
+        #{pcoDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pcoTitle != null" >
+        #{pcoTitle,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yshow.pic.model.db.pic.T_phoatlas" >
+    update t_phoatlas
+    <set >
+      <if test="pcoHptpid != null" >
+        pco_hptpid = #{pcoHptpid,jdbcType=INTEGER},
+      </if>
+      <if test="pcoDeg != null" >
+        pco_deg = #{pcoDeg,jdbcType=TINYINT},
+      </if>
+      <if test="pcoDate != null" >
+        pco_date = #{pcoDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pcoTitle != null" >
+        pco_title = #{pcoTitle,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pco_id = #{pcoId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yshow.pic.model.db.pic.T_phoatlas" >
+    update t_phoatlas
+    set pco_hptpid = #{pcoHptpid,jdbcType=INTEGER},
+      pco_deg = #{pcoDeg,jdbcType=TINYINT},
+      pco_date = #{pcoDate,jdbcType=TIMESTAMP},
+      pco_title = #{pcoTitle,jdbcType=VARCHAR}
+    where pco_id = #{pcoId,jdbcType=INTEGER}
+  </update>
+</mapper>
