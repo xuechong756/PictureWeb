@@ -1,0 +1,13 @@
+eclipse.preferences.version=1
+encoding//src/com/yshow/pic/contant/RequestEncpParams.java=UTF-8
+encoding//src/com/yshow/pic/contant/RequestUnencpParams.java=UTF-8
+encoding//src/com/yshow/pic/server/query/pic/VersionManager.java=UTF-8
+encoding//src/com/yshow/pic/utils/CalendarCus.java=UTF-8
+encoding//src/com/yshow/pic/utils/ExtractVersion.java=UTF-8
+encoding//src/com/yshow/pic/utils/GlobalUtils.java=UTF-8
+encoding//src/com/yshow/pic/utils/HttpConnectManager.java=UTF-8
+encoding//src/com/yshow/pic/utils/JsonUtil.java=UTF-8
+encoding//src/com/yshow/pic/utils/LogShow.java=UTF-8
+encoding//src/com/yshow/pic/utils/ResponseUtils.java=UTF-8
+encoding//src/com/yshow/pic/utils/StaticTools.java=UTF-8
+encoding//src/com/yshow/pic/utils/StringManager.java=UTF-8
